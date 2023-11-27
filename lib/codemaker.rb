@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require_relative 'pattern'
+
 # Class responsible for managing the secret sequence of mastermind
-class Coder
+class Codemaker
   def initialize
-    @code = random_code
+    @code = Pattern.create_random_pattern
   end
 
   def hint(guess)
@@ -25,11 +27,5 @@ class Coder
     end
 
     { right: right_count, almost_count: almost_count }
-  end
-
-  private
-
-  def random_code
-    Array.new(4).map { ('A'..'H').to_a.sample }
   end
 end
