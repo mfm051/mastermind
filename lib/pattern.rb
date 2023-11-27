@@ -10,6 +10,14 @@ class Pattern
     Pattern.new
   end
 
+  def letter_locations(letter)
+    @pattern.each_index.select { |i| @pattern[i] == letter }
+  end
+
+  def letters
+    @pattern.uniq
+  end
+
   private
 
   def random_pattern
