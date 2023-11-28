@@ -19,7 +19,7 @@ class Pattern
   end
 
   def locations_intersection(letter, another_pattern)
-    self.letter_locations(letter).intersection(another_pattern.letter_locations(letter))
+    letter_locations(letter).intersection(another_pattern.letter_locations(letter))
   end
 
   def count(letter)
