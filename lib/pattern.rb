@@ -3,6 +3,8 @@
 # Responsible for Mastermind patterns
 class Pattern
   def initialize(pattern = random_pattern)
+    raise(ArgumentError, 'Invalid pattern') unless valid_pattern?(pattern)
+
     @pattern = pattern
   end
 
@@ -28,7 +30,15 @@ class Pattern
 
   private
 
+  def valid_letters
+    ('A'..'H').to_a
+  end
+
   def random_pattern
-    Array.new(4).map { ('A'..'H').to_a.sample }
+    Array.new(4).map { valid_letters.sample }
+  end
+
+  def valid_pattern?(pattern)
+    pattern.is_a?(Array) && pattern.length == 4 && pattern.all? { |letter| valid_letters.include?(letter) }
   end
 end

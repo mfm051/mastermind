@@ -8,9 +8,12 @@ class Codebreaker
     @guess = nil
   end
 
-  def guess_from_user
-    puts('Choose a four-letter sequence with letters between "A" and "H"')
-    user_guess = gets.chomp.upcase.delete(' ').split('')
-    @guess = Pattern.new(user_guess)
+  def user_guess
+    user_input = gets.chomp.upcase.delete(' ').split('')
+    begin
+      @guess = Pattern.new(user_input)
+    rescue ArgumentError => e
+      puts e.message
+    end
   end
 end
