@@ -2,7 +2,7 @@
 
 require_relative 'pattern'
 
-# responsible from deciphering the code
+# Responsible for deciphering the code
 class Codebreaker
   def initialize
     @guess = nil

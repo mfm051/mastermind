@@ -2,7 +2,7 @@
 
 require_relative 'pattern'
 
-# Class responsible for managing the secret sequence of mastermind
+# Responsible for managing the secret sequence of mastermind
 class Codemaker
   def initialize
     @code = Pattern.create_random_pattern

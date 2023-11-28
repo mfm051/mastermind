@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Class responsible for patterns of Masterming
+# Responsible for Mastermind patterns
 class Pattern
   def initialize(pattern = random_pattern)
     @pattern = pattern
