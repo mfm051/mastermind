@@ -11,7 +11,11 @@ class Mastermind
   end
 
   def full_game
-    round until end_of_game?
+    until end_of_game?
+      round
+      @rounds_left -= 1
+      puts "#{@rounds_left} rounds remaining"
+    end
   end
 
   private
@@ -31,28 +35,21 @@ class Mastermind
   def pick_game_mode(option)
     raise ArgumentError, 'Invalid option' unless %i[player_codebreaker player_codemaker].include?(option)
 
-    if option == :player_codebreaker
-      @codemaker = Codemaker.random_code
-      @codebreaker = Codebreaker.new
-    else
+    if option == :player_codemaker
       @codemaker = Codemaker.new(Pattern.create_user_pattern)
       @codebreaker = Codebreaker.new('computer')
+    else
+      @codebreaker = Codebreaker.new('user')
+      @codemaker = Codemaker.computer_code
     end
   end
 
   def round
     @codebreaker.guess!
     puts @codemaker.answer(@codebreaker.guess)
-    @rounds_left -= 1
-    puts "#{@rounds_left} rounds remaining"
   end
 
   def end_of_game?
     @rounds_left.zero? || @current_guess && @codemaker.answer(@current_guess) == 'Right guess'
   end
 end
-
-# Test
-
-game = Mastermind.new
-game.full_game

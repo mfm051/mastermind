@@ -8,7 +8,7 @@ class Codemaker
     @code = code
   end
 
-  def self.random_code
+  def self.computer_code
     Codemaker.new(Pattern.new)
   end
 
