@@ -8,17 +8,28 @@ class Codemaker
     @code = Pattern.create_random_pattern
   end
 
+  def answer(guess)
+    return 'Right guess' if hint(guess)[:right] == 4
+
+    hint(guess)
+  end
+
+  private
+
   def hint(guess)
-    right_count = 0
-    almost_count = 0
+    total_right_count = 0
+    total_almost_count = 0
 
     guess.letters.each do |letter|
       next unless @code.letters.include?(letter)
 
-      right_count += guess.locations_intersection(letter, @code).count
-      almost_count += [guess.count(letter), @code.count(letter)].min - right_count
+      right_count = guess.locations_intersection(letter, @code).count
+      almost_count = [guess.count(letter), @code.count(letter)].min - right_count
+
+      total_right_count += right_count
+      total_almost_count += almost_count
     end
 
-    { right: right_count, almost: almost_count }
+    { right: total_right_count, almost: total_almost_count }
   end
 end
