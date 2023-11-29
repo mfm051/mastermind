@@ -40,8 +40,7 @@ class Mastermind
       @codebreaker = Codebreaker.new('computer')
     else
       @codebreaker = Codebreaker.new('user')
-      # @codemaker = Codemaker.computer_code
-      @codemaker = Codemaker.new(Pattern.new(%w[A B C D])) # DBG
+      @codemaker = Codemaker.computer_code
     end
   end
 

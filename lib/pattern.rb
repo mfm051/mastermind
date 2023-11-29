@@ -2,6 +2,8 @@
 
 # Responsible for Mastermind patterns
 class Pattern
+  attr_reader :pattern
+
   def initialize(pattern = random_pattern)
     raise(ArgumentError, 'Invalid pattern') unless valid_pattern?(pattern)
 
@@ -11,8 +13,8 @@ class Pattern
   def self.create_user_pattern
     puts 'Enter a four-letter sequence with letters between "A" and "H"'
     begin
-      user_guess = gets.chomp.upcase.delete(' ').split('')
-      Pattern.new(user_guess)
+      user_input = gets.chomp.upcase.delete(' ').split('')
+      Pattern.new(user_input)
     rescue ArgumentError => e
       puts e.message
       retry

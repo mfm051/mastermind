@@ -4,7 +4,7 @@ require_relative 'pattern'
 
 # Responsible for deciphering the code
 class Codebreaker
-  attr_reader :guess
+  attr_reader :guess, :player_type
 
   def initialize(player_type = 'user')
     @player_type = player_type
@@ -12,20 +12,17 @@ class Codebreaker
   end
 
   def guess!
-    @guess = @player_type == 'user' ? user_guess : computer_guess
+    return @guess = user_guess if @player_type == 'user'
+
+    @guess = computer_guess
+    sleep 1
+    puts @guess.pattern.join(' ')
   end
 
   private
 
   def user_guess
-    puts 'Enter a four-letter sequence with letters between "A" and "H"'
-    begin
-      user_input = gets.chomp.upcase.delete(' ').split('')
-      @guess = Pattern.new(user_input)
-    rescue ArgumentError => e
-      puts e.message
-      retry
-    end
+    Pattern.create_user_pattern
   end
 
   def computer_guess
