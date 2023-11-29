@@ -7,7 +7,6 @@ require_relative 'lib/codebreaker'
 class Mastermind
   def initialize
     setup_game
-    @current_guess = nil
     @rounds_left = 12
   end
 
@@ -18,10 +17,11 @@ class Mastermind
   private
 
   def setup_game
-    puts "--Mastermind--\n\nBreak the code or Make the code? [B/M]:"
+    puts "--Mastermind--\n\nBreak the code or Make the code?\n\n1: break\n2: make\n\n"
+    game_options = { player_codebreaker: '1', player_codemaker: '2' }
     begin
-      user_option = gets.chomp.upcase
-      pick_game_mode(user_option)
+      user_option = gets.chomp
+      pick_game_mode(game_options.key(user_option))
     rescue ArgumentError => e
       puts e.message
       retry
@@ -29,31 +29,22 @@ class Mastermind
   end
 
   def pick_game_mode(option)
-    raise ArgumentError, 'Invalid option: not "B" or "M"' unless %w[B M].include?(option)
+    raise ArgumentError, 'Invalid option' unless %i[player_codebreaker player_codemaker].include?(option)
 
-    if option == 'B'
+    if option == :player_codebreaker
       @codemaker = Codemaker.random_code
+      @codebreaker = Codebreaker.new
     else
       @codemaker = Codemaker.new(Pattern.create_user_pattern)
+      @codebreaker = Codebreaker.new('computer')
     end
   end
 
   def round
-    @current_guess = user_guess
-    puts @codemaker.answer(@current_guess)
+    @codebreaker.guess!
+    puts @codemaker.answer(@codebreaker.guess)
     @rounds_left -= 1
     puts "#{@rounds_left} rounds remaining"
-  end
-
-  def user_guess
-    puts 'Enter a four-letter sequence with letters between "A" and "H"'
-    begin
-      user_guess = gets.chomp.upcase.delete(' ').split('')
-      Pattern.new(user_guess)
-    rescue ArgumentError => e
-      puts e.message
-      retry
-    end
   end
 
   def end_of_game?
