@@ -11,7 +11,7 @@ class Pattern
   end
 
   def self.create_user_pattern
-    puts 'Enter a four-letter sequence with letters between "A" and "H"'
+    puts 'Enter a four-letter sequence with letters between "A" and "F"'
     begin
       user_input = gets.chomp.upcase.delete(' ').split('')
       Pattern.new(user_input)
@@ -40,7 +40,7 @@ class Pattern
   private
 
   def valid_letters
-    ('A'..'H').to_a
+    ('A'..'F').to_a
   end
 
   def random_pattern
