@@ -10,7 +10,7 @@ class Mastermind
     @rounds_left = 12
   end
 
-  def full_game
+  def start_game
     until end_of_game?
       round
       @rounds_left -= 1
@@ -40,7 +40,8 @@ class Mastermind
       @codebreaker = Codebreaker.new('computer')
     else
       @codebreaker = Codebreaker.new('user')
-      @codemaker = Codemaker.computer_code
+      # @codemaker = Codemaker.computer_code
+      @codemaker = Codemaker.new(Pattern.new(%w[A B C D])) # DBG
     end
   end
 
@@ -50,6 +51,6 @@ class Mastermind
   end
 
   def end_of_game?
-    @rounds_left.zero? || @current_guess && @codemaker.answer(@current_guess) == 'Right guess'
+    @rounds_left.zero? || @codebreaker.guess && @codemaker.answer(@codebreaker.guess) == 'Right guess'
   end
 end
