@@ -6,7 +6,7 @@ require_relative 'lib/codebreaker'
 # Controls game
 class Mastermind
   def initialize
-    @codemaker = Codemaker.new
+    setup_game
     @current_guess = nil
     @rounds_left = 12
   end
@@ -16,6 +16,27 @@ class Mastermind
   end
 
   private
+
+  def setup_game
+    puts "--Mastermind--\n\nBreak the code or Make the code? [B/M]:"
+    begin
+      user_option = gets.chomp.upcase
+      pick_game_mode(user_option)
+    rescue ArgumentError => e
+      puts e.message
+      retry
+    end
+  end
+
+  def pick_game_mode(option)
+    raise ArgumentError, 'Invalid option: not "B" or "M"' unless %w[B M].include?(option)
+
+    if option == 'B'
+      @codemaker = Codemaker.random_code
+    else
+      @codemaker = Codemaker.new(Pattern.create_user_pattern)
+    end
+  end
 
   def round
     @current_guess = user_guess
@@ -39,3 +60,8 @@ class Mastermind
     @rounds_left.zero? || @current_guess && @codemaker.answer(@current_guess) == 'Right guess'
   end
 end
+
+# Test
+
+game = Mastermind.new
+game.full_game

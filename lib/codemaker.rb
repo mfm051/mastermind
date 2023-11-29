@@ -4,8 +4,12 @@ require_relative 'pattern'
 
 # Responsible for managing the secret sequence of mastermind
 class Codemaker
-  def initialize
-    @code = Pattern.create_random_pattern
+  def initialize(code)
+    @code = code
+  end
+
+  def self.random_code
+    Codemaker.new(Pattern.new)
   end
 
   def answer(guess)

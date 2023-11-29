@@ -8,8 +8,15 @@ class Pattern
     @pattern = pattern
   end
 
-  def self.create_random_pattern
-    Pattern.new
+  def self.create_user_pattern
+    puts 'Enter a four-letter sequence with letters between "A" and "H"'
+    begin
+      user_guess = gets.chomp.upcase.delete(' ').split('')
+      Pattern.new(user_guess)
+    rescue ArgumentError => e
+      puts e.message
+      retry
+    end
   end
 
   def letters
