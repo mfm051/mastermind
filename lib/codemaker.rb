@@ -12,6 +12,10 @@ class Codemaker
     Codemaker.new(Pattern.new)
   end
 
+  def self.user_code
+    Codemaker.new(Pattern.create_user_pattern)
+  end
+
   def answer(guess)
     return 'Right guess' if hint(guess)[:right] == 4
 

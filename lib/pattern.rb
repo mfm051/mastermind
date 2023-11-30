@@ -6,7 +6,7 @@ class Pattern < Array
 
   def initialize(pattern = random_pattern)
     super
-    raise(ArgumentError, 'Invalid pattern') unless valid_pattern?(pattern)
+    raise(ArgumentError, 'Invalid pattern') unless valid?(pattern)
 
     @pattern = pattern
   end
@@ -44,7 +44,7 @@ class Pattern < Array
     Array.new(4).map { valid_letters.sample }
   end
 
-  def valid_pattern?(pattern)
+  def valid?(pattern)
     pattern.is_a?(Array) && pattern.length == 4 && pattern.all? { |letter| valid_letters.include?(letter) }
   end
 end

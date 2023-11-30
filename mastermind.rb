@@ -23,6 +23,7 @@ class Mastermind
   def setup_game
     puts "--Mastermind--\n\nBreak the code or Make the code?\n\n1: break\n2: make\n\n"
     game_options = { player_codebreaker: '1', player_codemaker: '2' }
+
     begin
       user_option = gets.chomp
       pick_game_mode(game_options.key(user_option))
@@ -36,11 +37,11 @@ class Mastermind
     raise ArgumentError, 'Invalid option' unless %i[player_codebreaker player_codemaker].include?(option)
 
     if option == :player_codemaker
-      @codemaker = Codemaker.new(Pattern.create_user_pattern)
+      @codemaker = Codemaker.user_code
       @codebreaker = Codebreaker.new('computer')
     else
-      @codebreaker = Codebreaker.new('user')
       @codemaker = Codemaker.computer_code
+      @codebreaker = Codebreaker.new('user')
     end
   end
 
@@ -53,3 +54,8 @@ class Mastermind
     @rounds_left.zero? || @codebreaker.guess && @codemaker.answer(@codebreaker.guess) == 'Right guess'
   end
 end
+
+# Game
+
+mastermind = Mastermind .new
+mastermind.start_game
