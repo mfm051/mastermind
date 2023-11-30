@@ -15,6 +15,7 @@ class Codebreaker
     return @guess = user_guess if @player_type == 'user'
 
     @guess = computer_guess
+
     sleep 1
     puts @guess.pattern.join(' ')
   end

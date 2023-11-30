@@ -7,12 +7,14 @@ require_relative 'lib/codebreaker'
 class Mastermind
   def initialize
     setup_game
+
     @rounds_left = 12
   end
 
   def start_game
     until end_of_game?
       round
+
       @rounds_left -= 1
       puts "#{@rounds_left} rounds remaining"
     end
@@ -57,5 +59,5 @@ end
 
 # Game
 
-mastermind = Mastermind .new
+mastermind = Mastermind.new
 mastermind.start_game

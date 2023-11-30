@@ -2,6 +2,8 @@
 
 # Responsible for Mastermind patterns
 class Pattern < Array
+  VALID_LETTERS = ('A'..'F').to_a
+
   attr_reader :pattern
 
   def initialize(pattern = random_pattern)
@@ -13,6 +15,7 @@ class Pattern < Array
 
   def self.create_user_pattern
     puts 'Enter a four-letter sequence with letters between "A" and "F"'
+
     begin
       user_input = gets.chomp.upcase.delete(' ').split('')
       Pattern.new(user_input)
@@ -20,6 +23,10 @@ class Pattern < Array
       puts e.message
       retry
     end
+  end
+
+  def self.possible_patterns
+    VALID_LETTERS.product(VALID_LETTERS, VALID_LETTERS, VALID_LETTERS)
   end
 
   def letters
@@ -36,15 +43,11 @@ class Pattern < Array
 
   private
 
-  def valid_letters
-    ('A'..'F').to_a
-  end
-
   def random_pattern
-    Array.new(4).map { valid_letters.sample }
+    Array.new(4).map { VALID_LETTERS.sample }
   end
 
   def valid?(pattern)
-    pattern.is_a?(Array) && pattern.length == 4 && pattern.all? { |letter| valid_letters.include?(letter) }
+    pattern.is_a?(Array) && pattern.length == 4 && pattern.all? { |letter| VALID_LETTERS.include?(letter) }
   end
 end
