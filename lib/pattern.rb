@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 # Responsible for Mastermind patterns
-class Pattern
+class Pattern < Array
   attr_reader :pattern
 
   def initialize(pattern = random_pattern)
+    super
     raise(ArgumentError, 'Invalid pattern') unless valid_pattern?(pattern)
 
     @pattern = pattern
@@ -31,10 +32,6 @@ class Pattern
 
   def locations_intersection(letter, another_pattern)
     letter_locations(letter).intersection(another_pattern.letter_locations(letter))
-  end
-
-  def count(letter)
-    @pattern.count(letter)
   end
 
   private
