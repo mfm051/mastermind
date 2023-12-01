@@ -5,8 +5,6 @@ require_relative 'lib/codebreaker'
 
 # Controls game
 class Mastermind
-  attr_reader :codemaker
-
   def initialize
     setup_game
 
@@ -17,10 +15,16 @@ class Mastermind
   def start_game
     until end_of_game?
       round
-
-      @rounds_left -= 1
-      puts "#{@rounds_left} rounds remaining"
+      puts feedback
+      puts "#{@rounds_left} rounds remaining" unless end_of_game?
     end
+  end
+
+  def feedback
+    return 'Game won' if @codemaker.answer(@codebreaker.guess) == 'Right guess'
+    return 'Game lost' if @rounds_left.zero?
+
+    @codemaker.answer(@codebreaker.guess)
   end
 
   private
@@ -52,11 +56,11 @@ class Mastermind
 
   def round
     @codebreaker.guess!
-    puts @codemaker.answer(@codebreaker.guess)
+    @rounds_left -= 1
   end
 
   def end_of_game?
-    @rounds_left.zero? || @codebreaker.guess && @codemaker.answer(@codebreaker.guess) == 'Right guess'
+    @codebreaker.guess && (feedback == 'Game won' || feedback == 'Game lost')
   end
 end
 

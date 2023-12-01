@@ -34,11 +34,9 @@ class Codebreaker
   end
 
   def update_guesses
-    game_feedback = game.codemaker.answer(@guess)
-
-    return if game_feedback == 'Right answer'
+    return if game.feedback == 'Game won'
 
     dummy_codemaker = Codemaker.new(@guess)
-    @possible_guesses.keep_if { |guess| dummy_codemaker.answer(guess) == game_feedback }
+    @possible_guesses.keep_if { |guess| dummy_codemaker.answer(guess) == game.feedback }
   end
 end
