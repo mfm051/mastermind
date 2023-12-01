@@ -5,9 +5,11 @@ require_relative 'pattern'
 # Responsible for deciphering the code
 class Codebreaker
   attr_reader :guess, :player_type
+  attr_accessor :game
 
   def initialize(player_type = 'user')
     @player_type = player_type
+    @possible_guesses = Pattern.possible_patterns
     @guess = nil
   end
 
@@ -15,9 +17,10 @@ class Codebreaker
     return @guess = user_guess if @player_type == 'user'
 
     @guess = computer_guess
+    update_guesses
 
     sleep 1
-    puts @guess.pattern.join(' ')
+    puts @guess.join(' ')
   end
 
   private
@@ -27,6 +30,15 @@ class Codebreaker
   end
 
   def computer_guess
-    Pattern.new
+    @possible_guesses.sample
+  end
+
+  def update_guesses
+    game_feedback = game.codemaker.answer(@guess)
+
+    return if game_feedback == 'Right answer'
+
+    dummy_codemaker = Codemaker.new(@guess)
+    @possible_guesses.keep_if { |guess| dummy_codemaker.answer(guess) == game_feedback }
   end
 end

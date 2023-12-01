@@ -26,7 +26,8 @@ class Pattern < Array
   end
 
   def self.possible_patterns
-    VALID_LETTERS.product(VALID_LETTERS, VALID_LETTERS, VALID_LETTERS)
+    valid_patterns = VALID_LETTERS.product(VALID_LETTERS, VALID_LETTERS, VALID_LETTERS)
+    valid_patterns.map { |pattern| Pattern.new(pattern) }
   end
 
   def letters

@@ -5,9 +5,12 @@ require_relative 'lib/codebreaker'
 
 # Controls game
 class Mastermind
+  attr_reader :codemaker
+
   def initialize
     setup_game
 
+    @codebreaker.game = self
     @rounds_left = 12
   end
 
