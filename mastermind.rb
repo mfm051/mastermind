@@ -21,6 +21,7 @@ class Mastermind
   end
 
   def feedback
+    return nil unless @codebreaker.guess
     return 'Game won' if @codemaker.answer(@codebreaker.guess) == 'Right guess'
     return 'Game lost' if @rounds_left.zero?
 
